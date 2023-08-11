@@ -1,13 +1,7 @@
-# Nome do produto
-> Descrição curta sobre o que seu projeto faz.
+# Projeto de Análise de Crédito
+> O projeto consiste em módulos relacionados à análise de score de crédito.
 
-[![NPM Version][npm-image]][npm-url]
-[![Build Status][travis-image]][travis-url]
-[![Downloads Stats][npm-downloads]][npm-url]
-
-O projeto consiste em módulos relacionados à análise de score de crédito. Os entregáveis fazem parte de um curso de Cientista de Dados, realizado pela EBAC. O módulo 1 está relacionado apenas à metodologia.
-
-![](../header.png)
+Os entregáveis fazem parte de um curso de Cientista de Dados, realizado pela EBAC. O módulo 1 está relacionado apenas à metodologia.
 
 ## Classificação de Crédito
 
@@ -63,14 +57,5 @@ O projeto consiste em módulos relacionados à análise de score de crédito. Os
 ## Meta
 
 Jefferson Silva – jff.silva11@gmail.com
-Distribuído sob a licença XYZ. Veja `LICENSE` para mais informações.
 
-[https://github.com/jeffersonsilva11](https://github.com/jeffersonsilva11)
-
-## Contributing
-
-1. Faça o _fork_ do projeto (<https://github.com/jeffersonsilva11/Credit-score>)
-2. Crie uma _branch_ para sua modificação (`git checkout -b feature/fooBar`)
-3. Faça o _commit_ (`git commit -am 'Add some fooBar'`)
-4. _Push_ (`git push origin feature/fooBar`)
-5. Crie um novo _Pull Request_
+Github: [https://github.com/jeffersonsilva11](https://github.com/jeffersonsilva11)

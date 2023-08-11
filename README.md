@@ -3,39 +3,40 @@
 
 Os entregáveis fazem parte de um curso de Cientista de Dados, realizado pela EBAC. O módulo 1 está relacionado apenas à metodologia.
 
-## Classificação de Crédito
+## 0.2.0 - Classificação de Crédito
 
 * [Parte 1](#)
 
-## Elementos básicos de Python e Numpy - Parte 1 e 2
+## 0.3.0 - Elementos básicos de Python e Numpy - Parte 1 e 2
 
 * [Parte 1](#)
 * [Parte 2](#)
 
-## Introdução ao Pandas e a Carga de Dados
+## 0.4.0 - Introdução ao Pandas e a Carga de Dados
 
 * [Parte 1](#)
 * [Parte 2](#)
 * [Parte 3](#)
 * [Base de dados](#)
 
-## Limpeza e Preparação de Dados
+## 0.5.0 - Limpeza e Preparação de Dados
 
 * [Parte 1](#)
 * [Parte 2](#)
 * [Base de Dados](#)
 
-## Descritiva I
+## 0.6.0 - Descritiva I
 
 * [Parte 1](#)
 * [Parte 2](#)
 * [Parte 2](3)
 
-## Árvores I
+## 0.7.0 - Árvores I
 
 * [Parte 1](#)
 * [Parte 2](#)
 
+### Versionamentos
 
 * 0.7.0
     * Módulo 7: Concluído.

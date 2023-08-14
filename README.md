@@ -36,8 +36,15 @@ Os entregáveis fazem parte de um curso de Cientista de Dados, realizado pela EB
 * [Parte 1](#)
 * [Parte 2](#)
 
+## 0.9.0 - TdD III - Agregações e operações em grupos
+
+* [Parte 1](#)
+* [Parte 2 - Em andamento](#)
+
 ### Versionamentos
 
+* 0.8.0
+    * Módulo 7: Em andamento.
 * 0.7.0
     * Módulo 7: Concluído.
 * 0.6.0

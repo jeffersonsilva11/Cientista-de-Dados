@@ -43,8 +43,8 @@ Os entregáveis fazem parte de um curso de Cientista de Dados, realizado pela EB
 
 ## 0.10.0 - Descritiva II - Análise descritiva para resposta contínua
 
-* [Parte 1](#) Em andamento.
-* [Parte 2](#) Para fazer.
+* [Parte 1](#) Concluído.
+* [Parte 2](#) Concluído.
 * [Parte 3](#) Para fazer.
 * [Base de Dados](#)
 
@@ -55,7 +55,7 @@ Os entregáveis fazem parte de um curso de Cientista de Dados, realizado pela EB
 * 0.9.0
     * Módulo 9: Concluído.
 * 0.8.0
-    * Módulo 8: Não houve material em Pyhton (apenas controle de versionamentos no GIT).
+    * Módulo 8: Não houve material em Pyhton (apenas um módulo referente a controle de versionamentos no GIT).
 * 0.7.0
     * Módulo 7: Concluído.
 * 0.6.0

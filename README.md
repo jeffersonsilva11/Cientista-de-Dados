@@ -45,13 +45,13 @@ Os entregáveis fazem parte de um curso de Cientista de Dados, realizado pela EB
 
 * [Parte 1](#) Concluído.
 * [Parte 2](#) Concluído.
-* [Parte 3](#) Para fazer.
+* [Parte 3](#) Concluído.
 * [Base de Dados](#)
 
 ### Versionamentos
 
 * 0.10.0
-    * Módulo 10: Em andamento.
+    * Módulo 10: Concluído.
 * 0.9.0
     * Módulo 9: Concluído.
 * 0.8.0

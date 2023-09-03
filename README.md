@@ -48,8 +48,15 @@ Os entregáveis fazem parte de um curso de Cientista de Dados, realizado pela EB
 * [Parte 3](#) Concluído.
 * [Base de Dados](#)
 
+## 0.11.0 - Árvores II - Árvore de Regressão
+
+* [Parte 1](#) Concluído.
+* [Parte 2](#) Em andamento.
+
 ### Versionamentos
 
+* 0.11.0
+    * Módulo 11: Em andamento.
 * 0.10.0
     * Módulo 10: Concluído.
 * 0.9.0

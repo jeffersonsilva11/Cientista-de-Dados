@@ -66,8 +66,16 @@ Os entregáveis fazem parte de um curso de Cientista de Dados, realizado pela EB
 * [Parte 2](#)
 * [Base de Dados](#)
 
+## 0.14.0 - Scripting
+
+* [Parte 1](#)
+* [Parte 2](#)
+* [Bases de Dados](#)
+
 ### Versionamentos
 
+* 0.13.0
+    * Módulo 14: Em andamento.
 * 0.13.0
     * Módulo 13: Concluído.
 * 0.12.0

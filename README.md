@@ -72,16 +72,30 @@ Os entregáveis fazem parte de um curso de Cientista de Dados, realizado pela EB
 * [Parte 2](#)
 * [Bases de Dados](#)
 
-## 0.15.0 - Scripting
+## 0.15.0 - Streamlit I
 
 * [Parte 1](#)
 
+## 0.16.0 - TdD IV - Pandas avançado / Projeto
+
+* [Parte 1](#)
+
+## 0.17.0 - Árvores II
+
+* [Parte 1](#)
+* [Parte 2](#)
+* [Parte 3](#)
+
 ### Versionamentos
 
+* 0.17.0
+    * Módulo 17: Concluído.
+* 0.16.0
+    * Módulo 16: Concluído.
 * 0.15.0
-    * Módulo 14: Em andamento.
+    * Módulo 15: Concluído.
 * 0.14.0
-    * Módulo 14: Em andamento.
+    * Módulo 14: Concluído.
 * 0.13.0
     * Módulo 13: Concluído.
 * 0.12.0

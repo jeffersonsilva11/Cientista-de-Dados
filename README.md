@@ -86,10 +86,17 @@ Os entregáveis fazem parte de um curso de Cientista de Dados, realizado pela EB
 * [Parte 2](#)
 * [Parte 3](#)
 
+## 0.18.0 - Regressão Logística I
+
+* [Parte 1](#)
+* [Parte 2](#)
+
 ### Versionamentos
 
+* 0.18.0
+    * Módulo 18: Em andamento.
 * 0.17.0
-    * Módulo 17: Em andamento.
+    * Módulo 17: Concluído.
 * 0.16.0
     * Módulo 16: Concluído.
 * 0.15.0

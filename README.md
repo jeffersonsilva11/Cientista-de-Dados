@@ -94,7 +94,7 @@ Os entregáveis fazem parte de um curso de Cientista de Dados, realizado pela EB
 ### Versionamentos
 
 * 0.18.0
-    * Módulo 18: Em andamento.
+    * Módulo 18: Concluído.
 * 0.17.0
     * Módulo 17: Concluído.
 * 0.16.0
@@ -136,7 +136,7 @@ Os entregáveis fazem parte de um curso de Cientista de Dados, realizado pela EB
 * 0.3.0
     * Módulo 3: Aulas concluídas.
 * 0.2.0
-    * Módulo 2: Concluído.
+    * Módulo 2: Aulas concluídas.
 * 0.1.1
     * Ajuste do repositório
 * 0.0.1

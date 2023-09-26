@@ -91,8 +91,25 @@ Os entregáveis fazem parte de um curso de Cientista de Dados, realizado pela EB
 * [Parte 1](#)
 * [Parte 2](#)
 
+## 0.19.0 - Streamlit II
+
+* [Parte 1](#)
+
+## 0.20.0 - Markdown I
+
+* [Parte 1](#)
+## 0.21.0 - LdV - SQL
+
+* [Parte 1](#)
+
 ### Versionamentos
 
+* 0.21.0
+    * Módulo 21: Concluído.
+* 0.20.0
+    * Módulo 20: Concluído.
+* 0.19.0
+    * Módulo 19: Concluído.
 * 0.18.0
     * Módulo 18: Concluído.
 * 0.17.0

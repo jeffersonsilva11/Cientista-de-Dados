@@ -6,6 +6,7 @@ import seaborn           as sns
 import matplotlib.pyplot as plt
 from PIL                 import Image
 from io                  import BytesIO
+import requests
 
 # Set no tema do seaborn para melhorar o visual dos plots
 custom_params = {"axes.spines.right": False, "axes.spines.top": False}
@@ -48,7 +49,7 @@ def to_excel(df):
 def main():
     # Configuração inicial da página da aplicação
     st.set_page_config(page_title = 'Telemarketing analisys', \
-        page_icon = 'https://github.com/jeffersonsilva11/Cientista-de-Dados/blob/6d65e6b1b0de463a8563f5324f2978b1439c5af0/modulo-28/telmarketing_icon.png',
+        page_icon = 'telmarketing_icon.png',
         layout="wide",
         initial_sidebar_state='expanded'
     )
@@ -58,7 +59,7 @@ def main():
     st.markdown("---")
     
     # Apresenta a imagem na barra lateral da aplicação
-    image = Image.open("https://github.com/jeffersonsilva11/Cientista-de-Dados/blob/6d65e6b1b0de463a8563f5324f2978b1439c5af0/modulo-28/Bank-Branding.jpg")
+    image = Image.open("Bank-Branding.jpg")
     st.sidebar.image(image)
 
     # Botão para carregar arquivo na aplicação

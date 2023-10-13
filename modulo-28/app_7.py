@@ -41,12 +41,16 @@ def to_excel(df):
     try:
         writer = pd.ExcelWriter(output, engine='xlsxwriter')
         df.to_excel(writer, index=False, sheet_name='Sheet1')
-        writer.save()
+        writer.close()  # Alteração de writer.save() para writer.close()
         processed_data = output.getvalue()
-        return processed_data
+        return processed_data, None  # Retorna os dados e uma mensagem de erro None
     except Exception as e:
-        st.error(f"Erro ao salvar o Excel: {e}")
-        return None
+        return None, str(e)  # Em caso de erro, retorna None e a mensagem de erro
+
+# Dentro da função main ou onde chama to_excel
+df_xlsx, error = to_excel(bank)
+if error:
+    st.error(f"Erro ao salvar o Excel: {error}")
 
 # Função principal da aplicação
 def main():

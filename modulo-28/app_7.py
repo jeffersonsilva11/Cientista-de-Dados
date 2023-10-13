@@ -62,7 +62,7 @@ def main():
     st.markdown("---")
     
     # Apresenta a imagem na barra lateral da aplicação
-    image_path = os.path.join(os.path.dirname(__file__), "imagens", "bank_branding.jpg")
+    image_path = os.path.join(os.path.dirname(__file__), "bank_branding.jpg")
     image = Image.open(image_path)
     st.sidebar.image(image)
 

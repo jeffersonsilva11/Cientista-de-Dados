@@ -6,7 +6,7 @@ import seaborn           as sns
 import matplotlib.pyplot as plt
 from PIL                 import Image
 from io                  import BytesIO
-import requests
+import os
 
 # Set no tema do seaborn para melhorar o visual dos plots
 custom_params = {"axes.spines.right": False, "axes.spines.top": False}
@@ -59,7 +59,8 @@ def main():
     st.markdown("---")
     
     # Apresenta a imagem na barra lateral da aplicação
-    image = Image.open("Bank-Branding.jpg")
+    image_path = os.path.join(os.path.dirname(__file__), "bank_branding.jpg")
+    image = Image.open(image_path)
     st.sidebar.image(image)
 
     # Botão para carregar arquivo na aplicação

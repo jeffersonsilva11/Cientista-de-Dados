@@ -24,7 +24,7 @@ def load_data(file_data):
 # Função para filtrar baseado na multiseleção de categorias
 @st.cache(allow_output_mutation=True)
 def multiselect_filter(relatorio, col, selecionados):
-    if 'all' in selecionados:
+    if 'all' in selecionados or not selecionados:
         return relatorio
     else:
         return relatorio[relatorio[col].isin(selecionados)].reset_index(drop=True)
@@ -40,7 +40,7 @@ def to_excel(df):
     output = BytesIO()
     try:
         writer = pd.ExcelWriter(output, engine='xlsxwriter')
-        df.to_excel("arquivo_filtrado.xlsx")
+        df.to_excel(writer, index=False, sheet_name='Sheet1')
         writer.save()
         processed_data = output.getvalue()
         return processed_data
@@ -97,6 +97,7 @@ def main():
             jobs_list = bank.job.unique().tolist()
             jobs_list.append('all')
             jobs_selected =  st.multiselect("Profissão", jobs_list, ['all'])
+            jobs_list.remove('all')
 
             # ESTADO CIVIL
             marital_list = bank.marital.unique().tolist()
@@ -141,7 +142,7 @@ def main():
 
                     
             # encadeamento de métodos para filtrar a seleção
-            bank = (bank.query("age >= @idades[0] and age <= @idades[1]")
+            bank = (bank.query("@idades[0] <= age <= @idades[1]")
                         .pipe(multiselect_filter, 'job', jobs_selected)
                         .pipe(multiselect_filter, 'marital', marital_selected)
                         .pipe(multiselect_filter, 'default', default_selected)

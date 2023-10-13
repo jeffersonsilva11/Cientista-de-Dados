@@ -38,12 +38,15 @@ def convert_df(df):
 @st.cache
 def to_excel(df):
     output = BytesIO()
-    writer = pd.ExcelWriter(output, engine='xlsxwriter')
-    df.to_excel(writer, index=False, sheet_name='Sheet1')
-    writer.save()
-    processed_data = output.getvalue()
-    return processed_data
-
+    try:
+        writer = pd.ExcelWriter(output, engine='xlsxwriter')
+        df.to_excel(writer, index=False, sheet_name='Sheet1')
+        writer.save()
+        processed_data = output.getvalue()
+        return processed_data
+    except Exception as e:
+        st.error(f"Erro ao salvar o Excel: {e}")
+        return None
 
 # Função principal da aplicação
 def main():

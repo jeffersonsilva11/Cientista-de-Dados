@@ -3,3 +3,5 @@ matplotlib
 pandas
 XlsxWriter
 seaborn
+pillow
+io

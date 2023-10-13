@@ -1,25 +1,24 @@
-
 # Imports
-import pandas            as pd
-import streamlit         as st
-import seaborn           as sns
+import pandas as pd
+import streamlit as st
+import seaborn as sns
 import matplotlib.pyplot as plt
-from PIL                 import Image
-from io                  import BytesIO
+from PIL import Image
+from io import BytesIO
 import os
 
 # Set no tema do seaborn para melhorar o visual dos plots
 custom_params = {"axes.spines.right": False, "axes.spines.top": False}
 sns.set_theme(style="ticks", rc=custom_params)
 
-
 # Função para ler os dados
-@st.cache(show_spinner= True, allow_output_mutation=True)
+@st.cache(show_spinner=True, allow_output_mutation=True)
 def load_data(file_data):
     try:
         return pd.read_csv(file_data, sep=';')
     except:
         return pd.read_excel(file_data)
+
 
 # Função para filtrar baseado na multiseleção de categorias
 @st.cache(allow_output_mutation=True)
@@ -41,11 +40,12 @@ def to_excel(df):
     try:
         writer = pd.ExcelWriter(output, engine='xlsxwriter')
         df.to_excel(writer, index=False, sheet_name='Sheet1')
-        writer.close()  # Alteração de writer.save() para writer.close()
+        writer.close()
         processed_data = output.getvalue()
-        return processed_data, None  # Retorna os dados e uma mensagem de erro None
+        return processed_data
     except Exception as e:
-        return None, str(e)  # Em caso de erro, retorna None e a mensagem de erro
+        st.error(f"Erro ao converter para Excel: {str(e)}")
+        return None
 
 # Função principal da aplicação
 def main():
@@ -158,10 +158,24 @@ def main():
         st.write('## Após os filtros')
         st.write(bank.head())
         
-        df_xlsx = to_excel(bank)
-        st.download_button(label='📥 Download tabela filtrada em EXCEL',
-                            data=df_xlsx ,
-                            file_name= 'bank_filtered.xlsx')
+        xlsx_data_raw = to_excel(bank_raw_target_perc)
+            if xlsx_data_raw:
+                col1.download_button(
+                label='📥 Download',
+                data=xlsx_data_raw,
+                file_name='bank_raw_y.xlsx',
+                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
+
+        xlsx_data_target = to_excel(bank_target_perc)
+            if xlsx_data_target:
+            col2.download_button(
+                label='📥 Download',
+                data=xlsx_data_target,
+                file_name='bank_y.xlsx',
+                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
+
         st.markdown("---")
 
         # PLOTS    

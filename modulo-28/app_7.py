@@ -159,8 +159,8 @@ def main():
         st.write(bank.head())
         
         xlsx_data_raw = to_excel(bank_raw_target_perc)
-            if xlsx_data_raw:
-                col1.download_button(
+        if xlsx_data_raw:
+            col1.download_button(
                 label='📥 Download',
                 data=xlsx_data_raw,
                 file_name='bank_raw_y.xlsx',
@@ -168,7 +168,7 @@ def main():
     )
 
         xlsx_data_target = to_excel(bank_target_perc)
-            if xlsx_data_target:
+        if xlsx_data_target:
             col2.download_button(
                 label='📥 Download',
                 data=xlsx_data_target,

@@ -4,4 +4,3 @@ pandas
 XlsxWriter
 seaborn
 pillow
-io

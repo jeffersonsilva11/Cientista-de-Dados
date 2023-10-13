@@ -1,5 +1,5 @@
 streamlit
 matplotlib
 pandas
-xlsWriter
+XlsxWriter
 seaborn

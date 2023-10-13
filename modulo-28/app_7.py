@@ -153,7 +153,16 @@ def main():
 
 
             submit_button = st.form_submit_button(label='Aplicar')
+
+        bank_raw_target_perc = bank_raw.y.value_counts(normalize = True).to_frame()*100
+        bank_raw_target_perc = bank_raw_target_perc.sort_index()
         
+        try:
+            bank_target_perc = bank.y.value_counts(normalize = True).to_frame()*100
+            bank_target_perc = bank_target_perc.sort_index()
+        except:
+            st.error('Erro no filtro')
+
         # Botões de download dos dados filtrados
         st.write('## Após os filtros')
         st.write(bank.head())
@@ -180,16 +189,7 @@ def main():
 
         # PLOTS    
         fig, ax = plt.subplots(1, 2, figsize = (5,3))
-
-        bank_raw_target_perc = bank_raw.y.value_counts(normalize = True).to_frame()*100
-        bank_raw_target_perc = bank_raw_target_perc.sort_index()
-        
-        try:
-            bank_target_perc = bank.y.value_counts(normalize = True).to_frame()*100
-            bank_target_perc = bank_target_perc.sort_index()
-        except:
-            st.error('Erro no filtro')
-        
+      
         # Botões de download dos dados dos gráficos
         col1, col2 = st.columns(2)
 

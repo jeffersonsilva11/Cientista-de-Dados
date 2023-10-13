@@ -47,11 +47,6 @@ def to_excel(df):
     except Exception as e:
         return None, str(e)  # Em caso de erro, retorna None e a mensagem de erro
 
-# Dentro da função main ou onde chama to_excel
-df_xlsx, error = to_excel(bank)
-if error:
-    st.error(f"Erro ao salvar o Excel: {error}")
-
 # Função principal da aplicação
 def main():
     # Configuração inicial da página da aplicação

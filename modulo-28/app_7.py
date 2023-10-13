@@ -1,27 +1,27 @@
+
 # Imports
-import pandas as pd
-import streamlit as st
-import seaborn as sns
+import pandas            as pd
+import streamlit         as st
+import seaborn           as sns
 import matplotlib.pyplot as plt
-from PIL import Image
-from io import BytesIO
-import os
+from PIL                 import Image
+from io                  import BytesIO
 
 # Set no tema do seaborn para melhorar o visual dos plots
 custom_params = {"axes.spines.right": False, "axes.spines.top": False}
 sns.set_theme(style="ticks", rc=custom_params)
 
+
 # Função para ler os dados
-@st.cache_data
+@st.cache(show_spinner= True, allow_output_mutation=True)
 def load_data(file_data):
     try:
         return pd.read_csv(file_data, sep=';')
     except:
         return pd.read_excel(file_data)
 
-
 # Função para filtrar baseado na multiseleção de categorias
-@st.cache_data
+@st.cache(allow_output_mutation=True)
 def multiselect_filter(relatorio, col, selecionados):
     if 'all' in selecionados:
         return relatorio
@@ -29,23 +29,20 @@ def multiselect_filter(relatorio, col, selecionados):
         return relatorio[relatorio[col].isin(selecionados)].reset_index(drop=True)
 
 # Função para converter o df para csv
-@st.cache_cache
+@st.cache
 def convert_df(df):
     return df.to_csv(index=False).encode('utf-8')
 
 # Função para converter o df para excel
-@st.cache_cache
+@st.cache
 def to_excel(df):
     output = BytesIO()
-    try:
-        writer = pd.ExcelWriter(output, engine='xlsxwriter')
-        df.to_excel(writer, index=False, sheet_name='Sheet1')
-        writer.close()
-        processed_data = output.getvalue()
-        return processed_data
-    except Exception as e:
-        st.error(f"Erro ao converter para Excel: {str(e)}")
-        return None
+    writer = pd.ExcelWriter(output, engine='xlsxwriter')
+    df.to_excel(writer, index=False, sheet_name='Sheet1')
+    writer.save()
+    processed_data = output.getvalue()
+    return processed_data
+
 
 # Função principal da aplicação
 def main():
@@ -61,8 +58,7 @@ def main():
     st.markdown("---")
     
     # Apresenta a imagem na barra lateral da aplicação
-    image_path = os.path.join(os.path.dirname(__file__), "bank_branding.jpg")
-    image = Image.open(image_path)
+    image = Image.open("bank_branding.jpg")
     st.sidebar.image(image)
 
     # Botão para carregar arquivo na aplicação
@@ -153,6 +149,19 @@ def main():
 
 
             submit_button = st.form_submit_button(label='Aplicar')
+        
+        # Botões de download dos dados filtrados
+        st.write('## Após os filtros')
+        st.write(bank.head())
+        
+        df_xlsx = to_excel(bank)
+        st.download_button(label='📥 Download tabela filtrada em EXCEL',
+                            data=df_xlsx ,
+                            file_name= 'bank_filtered.xlsx')
+        st.markdown("---")
+
+        # PLOTS    
+        fig, ax = plt.subplots(1, 2, figsize = (5,3))
 
         bank_raw_target_perc = bank_raw.y.value_counts(normalize = True).to_frame()*100
         bank_raw_target_perc = bank_raw_target_perc.sort_index()
@@ -162,34 +171,7 @@ def main():
             bank_target_perc = bank_target_perc.sort_index()
         except:
             st.error('Erro no filtro')
-
-        # Botões de download dos dados filtrados
-        st.write('## Após os filtros')
-        st.write(bank.head())
         
-        xlsx_data_raw = to_excel(bank_raw_target_perc)
-        if xlsx_data_raw:
-            col1.download_button(
-                label='📥 Download',
-                data=xlsx_data_raw,
-                file_name='bank_raw_y.xlsx',
-                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    )
-
-        xlsx_data_target = to_excel(bank_target_perc)
-        if xlsx_data_target:
-            col2.download_button(
-                label='📥 Download',
-                data=xlsx_data_target,
-                file_name='bank_y.xlsx',
-                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    )
-
-        st.markdown("---")
-
-        # PLOTS    
-        fig, ax = plt.subplots(1, 2, figsize = (5,3))
-      
         # Botões de download dos dados dos gráficos
         col1, col2 = st.columns(2)
 

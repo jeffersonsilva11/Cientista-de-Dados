@@ -4,6 +4,7 @@ import pandas            as pd
 import streamlit         as st
 import seaborn           as sns
 import matplotlib.pyplot as plt
+import os
 from PIL                 import Image
 from io                  import BytesIO
 
@@ -37,12 +38,15 @@ def convert_df(df):
 @st.cache
 def to_excel(df):
     output = BytesIO()
-    writer = pd.ExcelWriter(output, engine='xlsxwriter')
-    df.to_excel(writer, index=False, sheet_name='Sheet1')
-    writer.save()
-    processed_data = output.getvalue()
-    return processed_data
-
+    try:
+        writer = pd.ExcelWriter(output, engine='xlsxwriter')
+        df.to_excel(writer, index=False, sheet_name='Sheet1')
+        writer.save()
+        processed_data = output.getvalue()
+        return processed_data
+    except Exception as e:
+        st.error(f"Erro ao salvar o Excel: {e}")
+        return None
 
 # Função principal da aplicação
 def main():
@@ -58,7 +62,8 @@ def main():
     st.markdown("---")
     
     # Apresenta a imagem na barra lateral da aplicação
-    image = Image.open("bank_branding.jpg")
+    image_path = os.path.join(os.path.dirname(__file__), "imagens", "bank_branding.jpg")
+    image = Image.open(image_path)
     st.sidebar.image(image)
 
     # Botão para carregar arquivo na aplicação

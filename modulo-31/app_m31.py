@@ -1,6 +1,7 @@
 import pandas as pd
 import streamlit as st
 import base64
+from io import BytesIO
 
 # Função para o upload do arquivo
 def user_upload():
@@ -76,5 +77,13 @@ if df_compras is not None:
     st.write(df_RFV)
 
     # Permitindo que o usuário baixe o resultado
-    tmp_download_link = download_link(df_RFV, 'RFV_output.xlsx', 'Clique aqui para baixar o arquivo excel!')
-    st.markdown(tmp_download_link, unsafe_allow_html=True)
+def download_link(object_to_download, download_filename, download_link_text):
+    # Convertendo o DataFrame para formato binário Excel
+    if isinstance(object_to_download, pd.DataFrame):
+        buffer = BytesIO()
+        object_to_download.to_excel(buffer, index=True, engine='openpyxl')
+        object_to_download = buffer.getvalue()
+
+    b64 = base64.b64encode(object_to_download).decode()
+    return f'<a href="data:application/octet-stream;base64,{b64}" download="{download_filename}">{download_link_text}</a>'
+

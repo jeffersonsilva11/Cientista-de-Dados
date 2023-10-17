@@ -1,11 +1,6 @@
-import pandas            as pd
-import streamlit         as st
-import numpy             as np
+import pandas as pd
+import streamlit as st
 import base64
-
-from datetime            import datetime
-from PIL                 import Image
-from io                  import BytesIO
 
 # Função para o upload do arquivo
 def user_upload():
@@ -35,6 +30,14 @@ def freq_val_class(x, param, quartis):
     else:
         return 1
 
+# Função para criar o link de download
+def download_link(object_to_download, download_filename, download_link_text):
+    if isinstance(object_to_download, pd.DataFrame):
+        object_to_download = object_to_download.to_excel(index=True, engine='openpyxl')
+
+    b64 = base64.b64encode(object_to_download).decode()
+    return f'<a href="data:application/octet-stream;base64,{b64}" download="{download_filename}">{download_link_text}</a>'
+
 # Título da página
 st.title('Aplicação de Clusterização RFV')
 
@@ -46,22 +49,22 @@ if df_compras is not None:
     # Realizando as opções para criar o RFV
     dia_atual = df_compras['DiaCompra'].max()
     df_recencia = df_compras.groupby(by='ID_cliente', as_index=False)['DiaCompra'].max()
-    df_recencia.columns = ['ID_cliente','DiaUltimaCompra']
+    df_recencia.columns = ['ID_cliente', 'DiaUltimaCompra']
     df_recencia['Recencia'] = df_recencia['DiaUltimaCompra'].apply(lambda x: (dia_atual - x).days)
     df_recencia.drop('DiaUltimaCompra', axis=1, inplace=True)
 
-    df_frequencia = df_compras[['ID_cliente','CodigoCompra']].groupby('ID_cliente').count().reset_index()
-    df_frequencia.columns = ['ID_cliente','Frequencia']
+    df_frequencia = df_compras[['ID_cliente', 'CodigoCompra']].groupby('ID_cliente').count().reset_index()
+    df_frequencia.columns = ['ID_cliente', 'Frequencia']
 
-    df_valor = df_compras[['ID_cliente','ValorTotal']].groupby('ID_cliente').sum().reset_index()
-    df_valor.columns = ['ID_cliente','Valor']
+    df_valor = df_compras[['ID_cliente', 'ValorTotal']].groupby('ID_cliente').sum().reset_index()
+    df_valor.columns = ['ID_cliente', 'Valor']
 
     # Criando a clusterização RFV
     df_RF = df_recencia.merge(df_frequencia, on='ID_cliente')
     df_RFV = df_RF.merge(df_valor, on='ID_cliente')
     df_RFV.set_index('ID_cliente', inplace=True)
 
-    quartis = df_RFV.quantile(q=[0.25,0.5,0.75])
+    quartis = df_RFV.quantile(q=[0.25, 0.5, 0.75])
 
     df_RFV['R_quartil'] = df_RFV['Recencia'].apply(recencia_class, args=('Recencia', quartis))
     df_RFV['F_quartil'] = df_RFV['Frequencia'].apply(freq_val_class, args=('Frequencia', quartis))
@@ -72,11 +75,6 @@ if df_compras is not None:
     # Mostrando o resultado para o usuário
     st.write(df_RFV)
 
-# Permitindo que o usuário baixe o resultado
-output = BytesIO()
-with pd.ExcelWriter(output, engine='openpyxl') as writer:
-    df_RFV.to_excel(writer, sheet_name='Sheet1')
-excel_data = output.getvalue()
-b64 = base64.b64encode(excel_data).decode()  # codifica para base64
-st.markdown(f'<a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}" download="RFV_output.xlsx">Download RFV_output</a>', unsafe_allow_html=True)
-
+    # Permitindo que o usuário baixe o resultado
+    tmp_download_link = download_link(df_RFV, 'RFV_output.xlsx', 'Clique aqui para baixar o arquivo excel!')
+    st.markdown(tmp_download_link, unsafe_allow_html=True)

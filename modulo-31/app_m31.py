@@ -1,6 +1,7 @@
 import pandas            as pd
 import streamlit         as st
 import numpy             as np
+import base64
 
 from datetime            import datetime
 from PIL                 import Image
@@ -71,9 +72,11 @@ if df_compras is not None:
     # Mostrando o resultado para o usuário
     st.write(df_RFV)
 
-    # Permitindo que o usuário baixe o resultado
-    towrite = df_RFV.to_excel(index=True)
-    b64 = base64.b64encode(towrite.encode()).decode()
-    href = f'<a href="data:file/excel;base64,{b64}" download="RFV_output.xlsx">Download RFV_output</a>'
-    st.markdown(href, unsafe_allow_html=True)
+# Permitindo que o usuário baixe o resultado
+output = BytesIO()
+with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
+    df_RFV.to_excel(writer, sheet_name='Sheet1')
+excel_data = output.getvalue()
+b64 = base64.b64encode(excel_data).decode()  # codifica para base64
+st.markdown(f'<a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}" download="RFV_output.xlsx">Download RFV_output</a>', unsafe_allow_html=True)
 

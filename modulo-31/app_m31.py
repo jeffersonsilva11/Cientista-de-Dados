@@ -1,4 +1,3 @@
-# Importação das bibliotecas necessáras
 import pandas as pd
 import streamlit as st
 
@@ -6,41 +5,70 @@ import streamlit as st
 def user_upload():
     uploaded_file = st.file_uploader("Selecione a base de dados (.csv)", type="csv")
     if uploaded_file is not None:
-        data = pd.read_csv(uploaded_file)
+        data = pd.read_csv(uploaded_file, infer_datetime_format=True, parse_dates=['DiaCompra'])
         return data
     return None
+
+def recencia_class(x, param, quartis):
+    if x <= quartis[param][0.25]:
+        return 1
+    elif x <= quartis[param][0.50]:
+        return 2
+    elif x <= quartis[param][0.75]:
+        return 3
+    else:
+        return 4
+
+def freq_val_class(x, param, quartis):
+    if x <= quartis[param][0.25]:
+        return 4
+    elif x <= quartis[param][0.50]:
+        return 3
+    elif x <= quartis[param][0.75]:
+        return 2
+    else:
+        return 1
+
+# Título da página
+st.title('Aplicação de Clusterização RFV')
 
 df_compras = user_upload()
 
 if df_compras is not None:
     st.write("Base carregada com sucesso!")
 
-# Realizando as opções para criar o RFV
-dia_atual = df_compras['DiaCompra'].max()
-df_recencia = df_compras.groupby(by='ID_cliente', as_index=False)['DiaCompra'].max()
-df_recencia.columns = ['ID_cliente','DiaUltimaCompra']
-df_recencia['Recencia'] = df_recencia['DiaUltimaCompra'].apply(lambda x: (dia_atual - x).days)
-df_recencia.drop('DiaUltimaCompra', axis=1, inplace=True)
+    # Realizando as opções para criar o RFV
+    dia_atual = df_compras['DiaCompra'].max()
+    df_recencia = df_compras.groupby(by='ID_cliente', as_index=False)['DiaCompra'].max()
+    df_recencia.columns = ['ID_cliente','DiaUltimaCompra']
+    df_recencia['Recencia'] = df_recencia['DiaUltimaCompra'].apply(lambda x: (dia_atual - x).days)
+    df_recencia.drop('DiaUltimaCompra', axis=1, inplace=True)
 
-df_frequencia = df_compras[['ID_cliente','CodigoCompra']].groupby('ID_cliente').count().reset_index()
-df_frequencia.columns = ['ID_cliente','Frequencia']
+    df_frequencia = df_compras[['ID_cliente','CodigoCompra']].groupby('ID_cliente').count().reset_index()
+    df_frequencia.columns = ['ID_cliente','Frequencia']
 
-df_valor = df_compras[['ID_cliente','ValorTotal']].groupby('ID_cliente').sum().reset_index()
-df_valor.columns = ['ID_cliente','Valor']
+    df_valor = df_compras[['ID_cliente','ValorTotal']].groupby('ID_cliente').sum().reset_index()
+    df_valor.columns = ['ID_cliente','Valor']
 
-# Criando a clusterização RFV
-df_RF = df_recencia.merge(df_frequencia, on='ID_cliente')
-df_RFV = df_RF.merge(df_valor, on='ID_cliente')
-df_RFV.set_index('ID_cliente', inplace=True)
+    # Criando a clusterização RFV
+    df_RF = df_recencia.merge(df_frequencia, on='ID_cliente')
+    df_RFV = df_RF.merge(df_valor, on='ID_cliente')
+    df_RFV.set_index('ID_cliente', inplace=True)
 
-quartis = df_RFV.quantile(q=[0.25,0.5,0.75])
+    quartis = df_RFV.quantile(q=[0.25,0.5,0.75])
 
-# Criando os segmentos com base nos quartis
-df_RFV['R_quartil'] = df_RFV['Recencia'].apply(recencia_class, args=('Recencia', quartis))
-df_RFV['F_quartil'] = df_RFV['Frequencia'].apply(freq_val_class, args=('Frequencia', quartis))
-df_RFV['V_quartil'] = df_RFV['Valor'].apply(freq_val_class, args=('Valor', quartis))
+    df_RFV['R_quartil'] = df_RFV['Recencia'].apply(recencia_class, args=('Recencia', quartis))
+    df_RFV['F_quartil'] = df_RFV['Frequencia'].apply(freq_val_class, args=('Frequencia', quartis))
+    df_RFV['V_quartil'] = df_RFV['Valor'].apply(freq_val_class, args=('Valor', quartis))
 
-df_RFV['RFV_Score'] = df_RFV.R_quartil + df_RFV.F_quartil + df_RFV.V_quartil
+    df_RFV['RFV_Score'] = df_RFV.R_quartil.map(str) + df_RFV.F_quartil.map(str) + df_RFV.V_quartil.map(str)
 
-# Exportando o resultado para excel
-df_RFV.to_excel('RFV_output.xlsx')
+    # Mostrando o resultado para o usuário
+    st.write(df_RFV)
+
+    # Permitindo que o usuário baixe o resultado
+    towrite = df_RFV.to_excel(index=True)
+    b64 = base64.b64encode(towrite.encode()).decode()
+    href = f'<a href="data:file/excel;base64,{b64}" download="RFV_output.xlsx">Download RFV_output</a>'
+    st.markdown(href, unsafe_allow_html=True)
+

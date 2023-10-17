@@ -1,5 +1,5 @@
 streamlit
 pandas
 numpy
-PIL >=23.3.0
+Pillow
 xlsxwriter

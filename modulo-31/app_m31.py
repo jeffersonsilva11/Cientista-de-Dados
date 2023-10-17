@@ -74,7 +74,7 @@ if df_compras is not None:
 
 # Permitindo que o usuário baixe o resultado
 output = BytesIO()
-with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
+with pd.ExcelWriter(output, engine='openpyxl') as writer:
     df_RFV.to_excel(writer, sheet_name='Sheet1')
 excel_data = output.getvalue()
 b64 = base64.b64encode(excel_data).decode()  # codifica para base64

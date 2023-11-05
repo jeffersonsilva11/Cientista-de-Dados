@@ -79,6 +79,18 @@ def main():
                 # Mostrar os resultados
                 st.write("Resultados da Escoragem:")
                 st.write(df)
+                
+                # Mostrar os resultados
+                st.write("Resultados da Escoragem:")
+
+                # Define um número máximo de linhas para exibir, por exemplo, 1000
+                max_rows_to_display = 1000
+                if len(df) > max_rows_to_display:
+                    st.warning(f"Mostrando apenas as primeiras {max_rows_to_display} linhas devido ao limite de tamanho de dados.")
+                    st.write(df.head(max_rows_to_display))
+                else:
+                    st.write(df)
+                
                 # Download dos resultados como CSV
                 st.download_button(label='Download dos Resultados em CSV',
                                    data=df.to_csv().encode('utf-8'),

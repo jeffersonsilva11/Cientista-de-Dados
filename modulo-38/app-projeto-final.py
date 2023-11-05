@@ -6,7 +6,7 @@ import pickle
 from sklearn.preprocessing import StandardScaler # ou qualquer outro pré-processador necessário
 
 # Carregando o modelo treinado (ajuste o caminho conforme necessário)
-modelo = pickle.load(open('model_final.pkl', 'rb'))
+modelo = pickle.load(open('https://github.com/jeffersonsilva11/Cientista-de-Dados/blob/main/modulo-38/model_final.pkl', 'rb'))
 
 # Função para o pré-processamento dos dados (ajuste conforme seu pré-processamento)
 def preprocessamento(df):

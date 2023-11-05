@@ -1,13 +1,13 @@
 # Projeto de Análise de Crédito
 > O projeto consiste em módulos relacionados à análise de score de crédito.
-> Visualizar Projeto Final
 
+Os entregáveis fazem parte de um curso de Cientista de Dados, realizado pela EBAC. O módulo 1 está relacionado apenas à metodologia.
+
+Visualize o proejto final abaixo:
 <video width="320" height="240" controls>
   <source src="https://github.com/jeffersonsilva11/Cientista-de-Dados/blob/main/modulo-38/streamlit-app-projeto-final.webm" type="video/webm">
   Your browser does not support the video tag.
 </video>
-
-Os entregáveis fazem parte de um curso de Cientista de Dados, realizado pela EBAC. O módulo 1 está relacionado apenas à metodologia.
 
 ## 0.2.0 - Classificação de Crédito
 

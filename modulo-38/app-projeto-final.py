@@ -76,9 +76,6 @@ def main():
             if result is not None:
                 # Adicionar as previsões ao DataFrame
                 df['Previsão'] = result
-                # Mostrar os resultados
-                st.write("Resultados da Escoragem:")
-                st.write(df)
                 
                 # Mostrar os resultados
                 st.write("Resultados da Escoragem:")

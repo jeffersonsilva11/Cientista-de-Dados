@@ -14,7 +14,7 @@ response = requests.get(url)
 model = pickle.loads(response.content)
 
 # Função para o pré-processamento dos dados
-def preprocessamento(df):
+def preprocessamento(df, model):
     try:
         # Convertendo colunas categóricas e de data/hora para numéricas
         for col in df.columns:
@@ -22,6 +22,16 @@ def preprocessamento(df):
                 df[col] = df[col].astype('category').cat.codes
             elif df[col].dtype.name == 'datetime64[ns]':
                 df[col] = df[col].values.astype(np.int64) // 10 ** 9
+
+        # Adiciona colunas faltantes que o modelo espera, se necessário
+        model_feature_names = model.feature_names_in_
+        for feature in model_feature_names:
+            if feature not in df.columns:
+                # Adiciona a coluna faltante com valor padrão (ajuste conforme necessário)
+                df[feature] = 0
+
+        # Reordenar colunas para corresponder à ordem do modelo
+        df = df.reindex(columns=model_feature_names)
 
         # Inicializando o imputador para preencher valores NaN com a média da coluna
         imputer = SimpleImputer(missing_values=np.nan, strategy='mean')
@@ -36,21 +46,13 @@ def preprocessamento(df):
         return None
 
 # Função para realizar a escoragem
-def escoragem(df):
+def escoragem(df, model):
     # Pré-processamento dos dados
-    df_processed = preprocessamento(df)
+    df_processed = preprocessamento(df, model)
     if df_processed is not None:
-        # Verificar o número de características
-        expected_num_features = model.n_features_in_
-        actual_num_features = df_processed.shape[1]
-
-        if expected_num_features != actual_num_features:
-            st.error(f"O modelo espera {expected_num_features} características, mas foram fornecidas {actual_num_features}.")
-            return None
-        else:
-            # Realizar as previsões com o modelo carregado
-            predictions = model.predict(df_processed)
-            return predictions
+        # Realizar as previsões com o modelo carregado
+        predictions = model.predict(df_processed)
+        return predictions
     else:
         return None
 
@@ -70,8 +72,7 @@ def main():
         
         # Botão para realizar a escoragem
         if st.button('Escorar'):
-            # Chamar a função de escoragem
-            result = escoragem(df)
+            result = escoragem(df, model)
             if result is not None:
                 # Adicionar as previsões ao DataFrame
                 df['Previsão'] = result

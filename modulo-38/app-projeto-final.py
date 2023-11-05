@@ -40,9 +40,17 @@ def escoragem(df):
     # Pré-processamento dos dados
     df_processed = preprocessamento(df)
     if df_processed is not None:
-        # Realizar as previsões com o modelo carregado
-        predictions = model.predict(df_processed)
-        return predictions
+        # Verificar o número de características
+        expected_num_features = model.n_features_in_
+        actual_num_features = df_processed.shape[1]
+
+        if expected_num_features != actual_num_features:
+            st.error(f"O modelo espera {expected_num_features} características, mas foram fornecidas {actual_num_features}.")
+            return None
+        else:
+            # Realizar as previsões com o modelo carregado
+            predictions = model.predict(df_processed)
+            return predictions
     else:
         return None
 

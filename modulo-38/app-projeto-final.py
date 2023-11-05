@@ -4,7 +4,7 @@ import numpy as np
 import pickle
 import requests
 from sklearn.preprocessing import StandardScaler
-from io import BytesIO
+from sklearn.impute import SimpleImputer
 
 # URL do arquivo pickle "raw"
 url = 'https://raw.githubusercontent.com/jeffersonsilva11/Cientista-de-Dados/main/modulo-38/model_final.pkl'
@@ -23,9 +23,13 @@ def preprocessamento(df):
             elif df[col].dtype.name == 'datetime64[ns]':
                 df[col] = df[col].values.astype(np.int64) // 10 ** 9
 
+        # Inicializando o imputador para preencher valores NaN com a média da coluna
+        imputer = SimpleImputer(missing_values=np.nan, strategy='mean')
+        df_imputed = imputer.fit_transform(df)
+
         # Padronização dos dados
         scaler = StandardScaler()
-        df_scaled = scaler.fit_transform(df)
+        df_scaled = scaler.fit_transform(df_imputed)
         return df_scaled
     except Exception as e:
         st.error(f"Ocorreu um erro durante o pré-processamento: {e}")

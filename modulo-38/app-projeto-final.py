@@ -1,12 +1,16 @@
-# app.py
-
 import streamlit as st
 import pandas as pd
 import pickle
-from sklearn.preprocessing import StandardScaler # ou qualquer outro pré-processador necessário
+import requests
+from sklearn.preprocessing import StandardScaler  # ou qualquer outro pré-processador necessário
+from io import BytesIO
 
-# Carregando o modelo treinado (ajuste o caminho conforme necessário)
-modelo = pickle.load(open('https://github.com/jeffersonsilva11/Cientista-de-Dados/blob/main/modulo-38/model_final.pkl', 'rb'))
+# URL do arquivo pickle "raw"
+url = 'https://raw.githubusercontent.com/jeffersonsilva11/Cientista-de-Dados/main/modulo-38/model_final.pkl'
+
+# Baixar o arquivo do modelo pickle
+response = requests.get(url)
+model = pickle.load(BytesIO(response.content))
 
 # Função para o pré-processamento dos dados (ajuste conforme seu pré-processamento)
 def preprocessamento(df):

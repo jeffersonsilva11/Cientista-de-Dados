@@ -24,18 +24,18 @@ def escoragem(df):
     # Pré-processamento dos dados
     df_processed = preprocessamento(df)
     # Realizar as previsões com o modelo carregado
-    predictions = modelo.predict(df_processed)
+    predictions = model.predict(df_processed)
     return predictions
 
 # Interface Streamlit
 def main():
     st.title("Aplicação para Escoragem de Dados de Treino")
 
-    # Carregador de arquivos CSV
-    uploaded_file = st.file_uploader("Escolha um arquivo CSV para escoragem", type="csv")
+    # Carregador de arquivos FTR
+    uploaded_file = st.file_uploader("Escolha um arquivo FTR para escoragem", type=["ftr", "feather"])
     if uploaded_file is not None:
-        # Carregar o CSV para um DataFrame
-        df = pd.read_csv(uploaded_file)
+        # Carregar o FTR para um DataFrame
+        df = pd.read_feather(uploaded_file)
         
         # Mostrar o DataFrame no Streamlit (opcional)
         if st.checkbox('Mostrar dados brutos'):
